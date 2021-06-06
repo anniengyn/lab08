@@ -4,9 +4,10 @@ import org.junit.jupiter.api.Test;
 
 class PostFixTest {
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void test() {
+//		PostFix a = new PostFix();
+//		assertEquals("Not yet implemented");
+//	}
 
 }
