@@ -8,56 +8,48 @@ class PostFixTest {
 
 	@Test
 	void test_a() throws StackUnderflow, StackOverflow {
-		PostFix a = new PostFix();	
-		assertEquals(5, a.evaluate("1 2 * 3 +"));
+		assertEquals(5, PostFix.evaluate("1 2 * 3 +"));
 		}
 	
 	
 	@Test
 	void test_b() throws StackUnderflow, StackOverflow {
-		PostFix a = new PostFix();
-		assertEquals(7, a.evaluate("1 2 3 * +"));
+		assertEquals(7, PostFix.evaluate("1 2 3 * +"));
 
 	}
 	
 	@Test
 	void test_c() throws StackUnderflow, StackOverflow {
-		PostFix a = new PostFix();
-			assertEquals(-78, a.evaluate("1 2 + 3 4 ^ -"));
+			assertEquals(-78, PostFix.evaluate("1 2 + 3 4 ^ -"));
 	}
 	
 	@Test
 	void test_d() throws StackUnderflow, StackOverflow {
-		PostFix a = new PostFix();
-        assertEquals(-11, a.evaluate("1 2 ^ 3 4 * -"));
+        assertEquals(-11, PostFix.evaluate("1 2 ^ 3 4 * -"));
 
 	}
 	
 	@Test
 	void test_e() throws StackUnderflow, StackOverflow {
-		PostFix a = new PostFix();
-		assertEquals(-1011, a.evaluate("1 2 3 * + 4 5 ^ - 6 +"));
+		assertEquals(-1011, PostFix.evaluate("1 2 3 * + 4 5 ^ - 6 +"));
 
 	}
 	
 	@Test
 	void test_f() throws StackUnderflow, StackOverflow {
-		PostFix a = new PostFix();
-		assertEquals(9.25, a.evaluate("1 2 + 3 * 4 5 6 - ^ +"));
+		assertEquals(9.25, PostFix.evaluate("1 2 + 3 * 4 5 6 - ^ +"));
 
 	}
 	
 	@Test
 	void test_g() throws StackUnderflow, StackOverflow {
-		PostFix a = new PostFix();
-		assertEquals(98.75, a.evaluate("1 2 + 3 4 / + 5 + 6 7 8 + * +"));
+		assertEquals(98.75, PostFix.evaluate("1 2 + 3 4 / + 5 + 6 7 8 + * +"));
 
 	}
 	
 	@Test
 	void test_h() throws StackUnderflow, StackOverflow {
-		PostFix a = new PostFix();
-		assertEquals(-1, a.evaluate("9 1 - 2 - 3 2 * - 1 -"));
+		assertEquals(-1, PostFix.evaluate("9 1 - 2 - 3 2 * - 1 -"));
 
 	}
 	
