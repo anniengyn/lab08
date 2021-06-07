@@ -56,6 +56,8 @@ public class StackAsList<T> implements Stack<T> {
 
 	}
 	
+	// Returns a String that outputs the contents of the Stack 
+	
 	public String toString() {
 		if (isEmpty()) {
 			return null;
@@ -70,7 +72,7 @@ public class StackAsList<T> implements Stack<T> {
 		return sb.toString();	
 	}
 
-
+	// Checks if the Stack is empty
 	@Override
 	public boolean isEmpty() {
 		if (top == -1) {
@@ -79,6 +81,7 @@ public class StackAsList<T> implements Stack<T> {
 		return false;
 	}
 	
+	// Checks if the Stack is full
 	@Override
 	public boolean isFull() {
 		if (top == maxSize - 1) {
@@ -87,7 +90,7 @@ public class StackAsList<T> implements Stack<T> {
 		return false;
 	}
 
-
+	// adds or "pushes" a new element to the stack
 	@Override
 	public void push(T t) throws StackOverflow {
 		
@@ -101,6 +104,7 @@ public class StackAsList<T> implements Stack<T> {
 
 	}
 
+	// removes or "pops" the last element added from the stack 
 	@Override
 	public T pop() throws StackUnderflow {
 		
