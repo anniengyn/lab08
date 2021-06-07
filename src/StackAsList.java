@@ -2,7 +2,7 @@
 public class StackAsList<T> implements Stack<T> {
 
 	private T[] stackArray = null;
-	private int top = -1;
+	int top = -1;
 	private int maxSize;
 	
 	@SuppressWarnings("unchecked")
