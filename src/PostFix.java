@@ -1,7 +1,17 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class PostFix {
 
-	public static void main(String[] args) throws StackUnderflow, StackOverflow {
-		String pfx ="( 1 + 2 ) * 3 + ( 4 ^ ( 5 - 6 ) )";
+	public static void main(String[] args) throws StackUnderflow, StackOverflow, FormatException, IOException {
+		
+		BufferedReader reader = new BufferedReader(
+	    new InputStreamReader(System.in));
+		
+		System.out.print("Enter infix expression: ");
+		String pfx = reader.readLine();
+		
 		//System.out.println("Evaluation of postfix expression: " + evaluate(pfx));
 		//		printf(" \n Result of expression evaluation : %d \n", pop());
 
@@ -107,7 +117,10 @@ public class PostFix {
 		}
 	}
 
-	public static String infixToPostfix(String ifx) throws StackOverflow, StackUnderflow {
+	public static String infixToPostfix(String ifx) throws StackOverflow, StackUnderflow, FormatException {
+		
+		
+		
 		Stack<Character> stack2 = new StackAsList<Character>(20);
 
 		char[] c = ifx.toCharArray();
@@ -115,6 +128,19 @@ public class PostFix {
 		String pfxResult = "";
 
 		for (char input : c) {
+			
+			if (!Character.isDigit(input) 
+				|| input != '+'
+				|| input != '-'
+				|| input != '*'
+				|| input != '/'
+				|| input != '^'
+				|| input != '('
+				|| input != ')') 
+			{
+				throw new FormatException("Wrong string format!");
+			}
+			
 			if (Character.isDigit(input)) {
 				pfxResult += input;
 			} 
