@@ -1,183 +1,69 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class PostFix {
+import org.junit.jupiter.api.Test;
 
-	public static void main(String[] args) throws StackUnderflow, StackOverflow, FormatException, IOException {
-		
-		BufferedReader reader = new BufferedReader(
-	    new InputStreamReader(System.in));
-		
-		System.out.print("Enter infix expression: ");
-		String pfx = reader.readLine();
-		
-		//System.out.println("Evaluation of postfix expression: " + evaluate(pfx));
-		//		printf(" \n Result of expression evaluation : %d \n", pop());
+class PostFixTest {
+	
+	// Testing finger-exercises 
 
-		System.out.println("Infix to Postfix: " + infixToPostfix(pfx));
-	}
-
-	// takes a String representing a postfix expression and determines the value represented by that expression
-	// source: https://www.includehelp.com/c/evaluation-of-postfix-expressions-using-stack-with-c-program.aspx 
-	//         https://www.geeksforgeeks.org/stack-set-4-evaluation-postfix-expression/
-
-
-
-	public static Double evaluate(String pfx) throws StackUnderflow, StackOverflow {
-
-		Stack<Double> stack = new StackAsList<Double>(20);
-		char[] c = pfx.toCharArray();
-
-		Double a, b;
-
-		// evaluate postfix expression
-		for (char input : c) {
-			// if character is a number, push it to stack
-			if (Character.isDigit(input)) {
-				stack.push((double) Character.getNumericValue(input));
-			}
-			else if (input == '+' 
-					|| input == '*'
-					|| input == '/'
-					|| input == '-'
-					|| input == '^') {
-
-				// The top-most value taken from the stack is b, the second value taken is a
-
-				b = stack.pop();
-				a = stack.pop();
-
-				// otherwise if input is an operator, pop element a and element b from stack
-				// apply operator and push the value obtained onto stack
-				switch (input) {
-				case '^':
-					stack.push((Double)(Math.pow(a, b)));
-					break;
-
-				case '*':
-					stack.push(a * b);
-					break;
-
-				case '/':
-					stack.push(a / b);
-					break;
-
-				case '+':
-					stack.push(a + b);
-					break;
-
-				case '-':
-					stack.push(a - b);
-					break;
-
-				}
-
-			}
+	@Test
+	void test_a() throws StackUnderflow, StackOverflow {
+		assertEquals(5, PostFix.evaluate("1 2 * 3 +"));
 		}
-		return stack.pop();
-
-
+	
+	
+	@Test
+	void test_b() throws StackUnderflow, StackOverflow {
+		assertEquals(7, PostFix.evaluate("1 2 3 * +"));
 
 	}
-
-	static int prec(char ch)
-	{
-		switch (ch)
-		{
-		case '+':
-		case '-':
-			return 1;
-
-		case '*':
-		case '/':
-			return 2;
-
-		case '^':
-			return 3;
-		}
-		return -1;
+	
+	@Test
+	void test_c() throws StackUnderflow, StackOverflow {
+			assertEquals(-78, PostFix.evaluate("1 2 + 3 4 ^ -"));
 	}
+	
+	@Test
+	void test_d() throws StackUnderflow, StackOverflow {
+        assertEquals(-11, PostFix.evaluate("1 2 ^ 3 4 * -"));
 
-
-	// priority levels of operators, 3 = high priority 1 = lowest priority
-	// https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
-	public static int precedence(char operator) {
-		switch (operator) {
-		case '^':
-			return 3;
-		case '*':
-		case '/':
-			return 2;
-		case '+':
-		case '-':
-			return 1;
-		default:
-			return -1;
-		}
 	}
+	
+	@Test
+	void test_e() throws StackUnderflow, StackOverflow {
+		assertEquals(-1011, PostFix.evaluate("1 2 3 * + 4 5 ^ - 6 +"));
 
-	public static String infixToPostfix(String ifx) throws StackOverflow, StackUnderflow, FormatException {
-		
-		
-		
-		Stack<Character> stack2 = new StackAsList<Character>(20);
-
-		char[] c = ifx.toCharArray();
-		// initialize empty String for result
-		String pfxResult = "";
-
-		for (char input : c) {
-			
-			if (!Character.isDigit(input) 
-				|| input != '+'
-				|| input != '-'
-				|| input != '*'
-				|| input != '/'
-				|| input != '^'
-				|| input != '('
-				|| input != ')') 
-			{
-				throw new FormatException("Wrong string format!");
-			}
-			
-			if (Character.isDigit(input)) {
-				pfxResult += input;
-			} 
-			else if (input == '(') {
-				stack2.push(input);
-			}
-
-			else if (input == ')') {
-				while (!stack2.isEmpty() && stack2.peek() != '(')
-					pfxResult += stack2.pop();
-
-				stack2.pop();
-
-			}
-			else if (input == '+' || input == '*' || input == '/' || input == '-' || input == '^') {
-				if (stack2.isEmpty()) {
-					stack2.push(input);
-				}
-				else if (!stack2.isEmpty() && precedence(input) > precedence((char)stack2.peek())) {
-					stack2.push(input);
-				}
-				else if(!stack2.isEmpty() && precedence(input) <= precedence((char)stack2.peek())) {
-					while(!stack2.isEmpty() || precedence(input) >= precedence((char)stack2.peek())) {
-						pfxResult += stack2.pop();
-					}
-					stack2.push(input);
-				}
-			}
-			
-			
-		}
-		while(!stack2.isEmpty()) {
-			pfxResult += stack2.pop();
-		}
-		return pfxResult; 
 	}
+	
+	@Test
+	void test_f() throws StackUnderflow, StackOverflow {
+		assertEquals(9.25, PostFix.evaluate("1 2 + 3 * 4 5 6 - ^ +"));
+
+	}
+	
+	@Test
+	void test_g() throws StackUnderflow, StackOverflow {
+		assertEquals(98.75, PostFix.evaluate("1 2 + 3 4 / + 5 + 6 7 8 + * +"));
+
+	}
+	
+	@Test
+	void test_h() throws StackUnderflow, StackOverflow {
+		assertEquals(-1, PostFix.evaluate("9 1 - 2 - 3 2 * - 1 -"));
+
+	}
+	
+	// infixToPostfix test cases
+	
+	@Test
+	void test_1() throws StackUnderflow, StackOverflow {
+		assertEquals("1 2 * 3 +", PostFix.infixToPostfix("1 * 2 + 3"));
+
+	}
+	
+	
+	
+	
+	
+
 }
-
-
-
