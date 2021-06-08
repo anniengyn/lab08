@@ -7,14 +7,13 @@ public class PostFix {
 	public static void main(String[] args) throws StackUnderflow, StackOverflow, FormatException, IOException {
 		
 		BufferedReader reader = new BufferedReader(
-	    new InputStreamReader(System.in));
+	        new InputStreamReader(System.in));
 		
 		System.out.print("Enter infix expression: ");
 		String pfx = reader.readLine();
 		
 		//System.out.println("Evaluation of postfix expression: " + evaluate(pfx));
-		//		printf(" \n Result of expression evaluation : %d \n", pop());
-
+		
 		System.out.println("Infix to Postfix: " + infixToPostfix(pfx));
 	}
 
@@ -50,6 +49,7 @@ public class PostFix {
 
 				// otherwise if input is an operator, pop element a and element b from stack
 				// apply operator and push the value obtained onto stack
+				
 				switch (input) {
 				case '^':
 					stack.push((Double)(Math.pow(a, b)));
@@ -80,25 +80,6 @@ public class PostFix {
 
 
 	}
-
-	static int prec(char ch)
-	{
-		switch (ch)
-		{
-		case '+':
-		case '-':
-			return 1;
-
-		case '*':
-		case '/':
-			return 2;
-
-		case '^':
-			return 3;
-		}
-		return -1;
-	}
-
 
 	// priority levels of operators, 3 = high priority 1 = lowest priority
 	// https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
