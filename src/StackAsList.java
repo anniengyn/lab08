@@ -2,7 +2,7 @@
 public class StackAsList<T> implements Stack<T> {
 
 	private T[] stackArray = null;
-	int top = -1;
+	private int top = -1;
 	private int maxSize;
 	
 	@SuppressWarnings("unchecked")
@@ -118,6 +118,16 @@ public class StackAsList<T> implements Stack<T> {
 		top--;
  
 		return result;
+	}
+
+	public char peek() {
+		
+		if (top == -1) {
+			return '^';
+		}
+
+		return (char)stackArray[top];
+
 	}
 
 
