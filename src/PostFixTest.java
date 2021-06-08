@@ -53,13 +53,6 @@ class PostFixTest {
 
 	}
 	
-	// infixToPostfix test cases
-	
-	@Test
-	void test_1() throws StackUnderflow, StackOverflow {
-		assertEquals("1 2 * 3 +", PostFix.infixToPostfix("1 * 2 + 3"));
-
-	}
 	
 	
 	
