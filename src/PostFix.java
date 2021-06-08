@@ -1,26 +1,18 @@
 public class PostFix {
 
 	public static void main(String[] args) throws StackUnderflow, StackOverflow {
-//		String pfx = "1 2 + 3 4 ^ -";
-//		System.out.println("Evaluation of postfix expression: " + evaluate(pfx));
+		String pfx ="( 1 + 2 ) * 3 + ( 4 ^ ( 5 - 6 ) )";
+		//System.out.println("Evaluation of postfix expression: " + evaluate(pfx));
+		//		printf(" \n Result of expression evaluation : %d \n", pop());
 
-		// read an infix String from the console, evaluates the result and prints the
-		// result to the console
-
-		PostFix p = new PostFix();
-//		String ifx = "1+2*3";
-//		String ifx = "1 + 2 + 3 / 4 + 5 + 6 * ( 7 + 8 )";
-		String ifx = "1 + 2 - 3 ^ 4";
-
-
-		System.out.println("Infix: " + ifx + " To Postfix = " + p.infixToPostfix(ifx));
+		System.out.println("Infix to Postfix: " + infixToPostfix(pfx));
 	}
 
-	// takes a String representing a postfix expression and determines the value
-	// represented by that expression
-	// source:
-	// https://www.includehelp.com/c/evaluation-of-postfix-expressions-using-stack-with-c-program.aspx
-	// https://www.geeksforgeeks.org/stack-set-4-evaluation-postfix-expression/
+	// takes a String representing a postfix expression and determines the value represented by that expression
+	// source: https://www.includehelp.com/c/evaluation-of-postfix-expressions-using-stack-with-c-program.aspx 
+	//         https://www.geeksforgeeks.org/stack-set-4-evaluation-postfix-expression/
+
+
 
 	public static Double evaluate(String pfx) throws StackUnderflow, StackOverflow {
 
@@ -34,7 +26,12 @@ public class PostFix {
 			// if character is a number, push it to stack
 			if (Character.isDigit(input)) {
 				stack.push((double) Character.getNumericValue(input));
-			} else if (input == '+' || input == '*' || input == '/' || input == '-' || input == '^') {
+			}
+			else if (input == '+' 
+					|| input == '*'
+					|| input == '/'
+					|| input == '-'
+					|| input == '^') {
 
 				// The top-most value taken from the stack is b, the second value taken is a
 
@@ -45,7 +42,7 @@ public class PostFix {
 				// apply operator and push the value obtained onto stack
 				switch (input) {
 				case '^':
-					stack.push((Double) (Math.pow(a, b)));
+					stack.push((Double)(Math.pow(a, b)));
 					break;
 
 				case '*':
@@ -70,12 +67,14 @@ public class PostFix {
 		}
 		return stack.pop();
 
+
+
 	}
 
-	// priority levels of operators, 3 = high priority 1 = lowest priority
-	// Source: https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
-	static int Prec(char ch) {
-		switch (ch) {
+	static int prec(char ch)
+	{
+		switch (ch)
+		{
 		case '+':
 		case '-':
 			return 1;
@@ -89,48 +88,70 @@ public class PostFix {
 		}
 		return -1;
 	}
-	
 
-	// converts an infix expression which is presented as a String to a String
-	// representing a postfix expression
 
-	public String infixToPostfix(String ifx) throws StackOverflow, StackUnderflow {
-		StackAsList<Character> stack2 = new StackAsList<Character>();
+	// priority levels of operators, 3 = high priority 1 = lowest priority
+	// https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
+	public static int precedence(char operator) {
+		switch (operator) {
+		case '^':
+			return 3;
+		case '*':
+		case '/':
+			return 2;
+		case '+':
+		case '-':
+			return 1;
+		default:
+			return -1;
+		}
+	}
+
+	public static String infixToPostfix(String ifx) throws StackOverflow, StackUnderflow {
+		Stack<Character> stack2 = new StackAsList<Character>(20);
+
 		char[] c = ifx.toCharArray();
 		// initialize empty String for result
 		String pfxResult = "";
 
 		for (char input : c) {
-			if(input == ' ' || input == ',') continue;
 			if (Character.isDigit(input)) {
 				pfxResult += input;
-			} else if (input == '(') {
-				stack2.push((char) Character.getNumericValue(input));
+			} 
+			else if (input == '(') {
+				stack2.push(input);
 			}
 
 			else if (input == ')') {
-				while (!stack2.isEmpty() && stack2.top != '(')
+				while (!stack2.isEmpty() && stack2.peek() != '(')
 					pfxResult += stack2.pop();
 
 				stack2.pop();
 
-			} else if (input == '+' || input == '*' || input == '/' || input == '-' || input == '^') {
-				while (!stack2.isEmpty() && Prec(input) <= Prec((char) stack2.top)) {
-					pfxResult += stack2.pop();
-				}
-				stack2.push(input);
-
 			}
+			else if (input == '+' || input == '*' || input == '/' || input == '-' || input == '^') {
+				if (stack2.isEmpty()) {
+					stack2.push(input);
+				}
+				else if (!stack2.isEmpty() && precedence(input) > precedence((char)stack2.peek())) {
+					stack2.push(input);
+				}
+				else if(!stack2.isEmpty() && precedence(input) <= precedence((char)stack2.peek())) {
+					while(!stack2.isEmpty() || precedence(input) >= precedence((char)stack2.peek())) {
+						pfxResult += stack2.pop();
+					}
+					stack2.push(input);
+				}
+			}
+			
+			
 		}
-
-		while (!stack2.isEmpty()) {
-			if(stack2.top == '(')
-                return "Error";
+		while(!stack2.isEmpty()) {
 			pfxResult += stack2.pop();
 		}
-
-		return pfxResult;
-
+		return pfxResult; 
 	}
-
 }
+
+
+
