@@ -104,7 +104,7 @@ public class StackAsList<T> implements Stack<T> {
 
 	}
 
-	// removes or "pops" the last element added from the stack 
+	// returns and removes/"pops" the last element added from the stack 
 	@Override
 	public T pop() throws StackUnderflow {
 		
@@ -114,7 +114,7 @@ public class StackAsList<T> implements Stack<T> {
 		
 		
 		T result = stackArray[top];
-		stackArray[top] = null;  //prevent memory leaking
+		stackArray[top] = null;  
 		top--;
  
 		return result;
