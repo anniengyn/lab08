@@ -79,24 +79,6 @@ public class PostFix {
 
 	}
 
-	static int prec(char ch)
-	{
-		switch (ch)
-		{
-		case '+':
-		case '-':
-			return 1;
-
-		case '*':
-		case '/':
-			return 2;
-
-		case '^':
-			return 3;
-		}
-		return -1;
-	}
-
 
 	// priority levels of operators, 3 = high priority 1 = lowest priority
 	// https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
