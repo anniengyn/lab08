@@ -4,16 +4,15 @@ import java.io.InputStreamReader;
 
 public class PostFix {
 
-	public static void main(String[] args) throws StackUnderflow, StackOverflow, FormatException, IOException {
-		
+	public static void main(String[] args) throws StackUnderflow, StackOverflow, IOException, FormatException {
+
 		BufferedReader reader = new BufferedReader(
-	        new InputStreamReader(System.in));
-		
-		System.out.print("Enter infix expression: ");
+				new InputStreamReader(System.in));
+
+		System.out.print("Please enter an infix expression: ");
 		String pfx = reader.readLine();
 		
-		//System.out.println("Evaluation of postfix expression: " + evaluate(pfx));
-		
+
 		System.out.println("Infix to Postfix: " + infixToPostfix(pfx));
 	}
 
@@ -49,7 +48,6 @@ public class PostFix {
 
 				// otherwise if input is an operator, pop element a and element b from stack
 				// apply operator and push the value obtained onto stack
-				
 				switch (input) {
 				case '^':
 					stack.push((Double)(Math.pow(a, b)));
@@ -81,6 +79,25 @@ public class PostFix {
 
 	}
 
+	static int prec(char ch)
+	{
+		switch (ch)
+		{
+		case '+':
+		case '-':
+			return 1;
+
+		case '*':
+		case '/':
+			return 2;
+
+		case '^':
+			return 3;
+		}
+		return -1;
+	}
+
+
 	// priority levels of operators, 3 = high priority 1 = lowest priority
 	// https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
 	public static int precedence(char operator) {
@@ -99,9 +116,9 @@ public class PostFix {
 	}
 
 	public static String infixToPostfix(String ifx) throws StackOverflow, StackUnderflow, FormatException {
-		
-		
-		
+
+
+
 		Stack<Character> stack2 = new StackAsList<Character>(20);
 
 		char[] c = ifx.toCharArray();
@@ -109,19 +126,21 @@ public class PostFix {
 		String pfxResult = "";
 
 		for (char input : c) {
-			
+
 			if (!Character.isDigit(input) 
-				|| input != '+'
-				|| input != '-'
-				|| input != '*'
-				|| input != '/'
-				|| input != '^'
-				|| input != '('
-				|| input != ')') 
+				&& input != '+' 
+				&& input != '-'
+				&& input != '*'
+				&& input != '/'
+				&& input != '^'
+				&& input != '('
+				&& input != ')') 
 			{
 				throw new FormatException("Wrong string format!");
 			}
-			
+
+			 
+
 			if (Character.isDigit(input)) {
 				pfxResult += input;
 			} 
@@ -150,8 +169,8 @@ public class PostFix {
 					stack2.push(input);
 				}
 			}
-			
-			
+
+
 		}
 		while(!stack2.isEmpty()) {
 			pfxResult += stack2.pop();
