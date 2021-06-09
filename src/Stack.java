@@ -5,4 +5,5 @@ public interface Stack<T> {
 	public boolean isEmpty();
 	public boolean isFull();
 	public String toString();
+	public char peek();
 }
